@@ -1,2 +1,3 @@
 # cppWorkClass
-summary of my college .cpp projects
+Summary of my college .cpp projects
+Maybe something can help you. Enjoy!
