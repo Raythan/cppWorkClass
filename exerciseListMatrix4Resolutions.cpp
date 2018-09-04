@@ -1,7 +1,3 @@
-Você pode compilar esse código no Dev c++
-Só não está adequadamente adentado!
-
------------------------ INICIO DO CÓDIGO -------------------------------- 
 #include <stdlib.h>
 #include <stdio.h>
 
