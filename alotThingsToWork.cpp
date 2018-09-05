@@ -51,6 +51,42 @@ LISTA ENLAÇADA -------------------------
 		printf("\t %d", ptr -> data);
 		ptr = ptr -> next;
 	}
+	
+<><><><><><><><><><><><><><><><><><> EXEMPLO DE LISTA ENLAÇADA <><><><><><><><><><><><><><><><><><>
+#include <stdlib.h>
+#include <stdio.h>
+
+struct node
+	{
+		int data;
+		struct node *next;
+	};
+	
+int main(){
+	struct node *start = NULL; // >>>> nesse momento = NULL;
+	int i = 28, num = 28; // Elemento a inserir
+	struct node *ptr; // >>>> ponteiro que vai percorrer a lista
+	
+	node variavel;
+	
+	while(i != 40){
+		ptr = (struct node*) malloc (sizeof(struct node));
+		ptr -> data = i;
+		ptr -> next = start;
+		start = ptr;
+		i++;
+	}
+	
+	while(ptr != NULL)
+	{
+		printf("\t %d", ptr -> data);
+		ptr = ptr -> next;
+	}
+	
+	
+	return 0;
+}
+<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 */
 
