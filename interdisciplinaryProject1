@@ -1,0 +1,57 @@
+/*
+  Nomes de disciplinas por semestre
+  Quantidade de alunos matriculados
+  Quantidade de alunos reprovados por frequência
+  Quantidade de alunos aprovados
+  em cada disciplina
+  
+  saída
+  Porcentagem de alunos aprovados
+  Porcentagem de alunos reprovados por frequencia
+  Nome e porcentagem de aprovação de disciplinas com porcentagem de aprovação 10% menor que a porcentagem da faculdade
+*/
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct disciplineInfo
+{
+	char vet[10];
+	int semester;
+};
+
+typedef struct studentsInfo
+{
+	int qtyRegStud;
+	int qtyDisapprovedStud;
+	int qtyApprovedStud;
+	struct studentsInfo *next;
+};
+
+
+
+int main(){
+	int n = 2, i = 0, sem = 0;
+	printf("This form have a target to inform somethings about students of Fantasy College.\n");
+	printf("For report that information, i need to know somethings like...\n");
+	printf("How much disciplines you will input:\n");
+	scanf("%d", &n);
+	{
+		disciplineInfo discipline[n];
+		while(i<n){
+			printf("The discipline name: \n");
+			scanf("%s", &discipline[i].vet);
+			printf("The semester that discipline is associated: \n");
+			scanf("%d", &discipline[i].semester);
+			i++;
+		}
+		i=0;
+		while(i<n){
+			printf("Discipline: %s, Semester: %d", discipline[i].vet,discipline[i].semester);
+			i++;
+		}
+		
+	}
+	
+	return 0;
+}
