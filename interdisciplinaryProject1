@@ -1,56 +1,78 @@
 /*
+  ENTRADA
   Nomes de disciplinas por semestre
   Quantidade de alunos matriculados
   Quantidade de alunos reprovados por frequência
-  Quantidade de alunos aprovados
-  em cada disciplina
+  Quantidade de alunos aprovados em cada disciplina
   
-  saída
+  SAÍDA
   Porcentagem de alunos aprovados
   Porcentagem de alunos reprovados por frequencia
-  Nome e porcentagem de aprovação de disciplinas com porcentagem de aprovação 10% menor que a porcentagem da faculdade
+  Nome e porcentagem de aprovação de disciplinas com porcentagem 10% menor que a porcentagem da faculdade
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct disciplineInfo
+typedef struct disciplineInfo // Vector
 {
-	char vet[10];
-	int semester;
+	char name[100]; // Discipline name
+	int semester; // Relationed semester
+	float qtyApproved; // Quantity of students approveds by discipline
 };
 
-typedef struct studentsInfo
+typedef struct studentsInfo // Variable
 {
-	int qtyRegStud;
-	int qtyDisapprovedStud;
-	int qtyApprovedStud;
-	struct studentsInfo *next;
+	int qtyRegStud; // Quantity of students register
+	int qtyReprovedStud; // Quantity of reproved students
+	float totalStudApproved; // Quantity of approved students on total
+	float percentApproved; // Percentage of approved students
 };
-
 
 
 int main(){
-	int n = 2, i = 0, sem = 0;
+	int qtyDisciplines = 0, // quantity of disciplines registered;
+	i = 0, // counter;
+	qtyStudents = 0; // quantity of studentes registered;
 	printf("This form have a target to inform somethings about students of Fantasy College.\n");
-	printf("For report that information, i need to know somethings like...\n");
-	printf("How much disciplines you will input:\n");
-	scanf("%d", &n);
+	printf("For report that information, I need to know somethings like...\n");
+	printf("How much disciplines you will register:\n");
+	scanf("%d", &qtyDisciplines);
 	{
-		disciplineInfo discipline[n];
-		while(i<n){
-			printf("The discipline name: \n");
-			scanf("%s", &discipline[i].vet);
+		disciplineInfo discipline[qtyDisciplines];
+		studentsInfo students;
+		// This part is for register any discipline
+		while(i<qtyDisciplines){
+			printf("The discipline name without special characters: \n");
+			scanf("\n%[^\n]s", &discipline[i].name);
 			printf("The semester that discipline is associated: \n");
 			scanf("%d", &discipline[i].semester);
 			i++;
 		}
-		i=0;
-		while(i<n){
-			printf("Discipline: %s, Semester: %d", discipline[i].vet,discipline[i].semester);
-			i++;
+		system("cls");
+		// Another important registers
+		printf("Now I need you to inform how many students had been register: ");
+		scanf("%d", &students.qtyRegStud);
+		printf("How many had been reproved by frequency: ");
+		scanf("%d", &students.qtyReprovedStud);
+		printf("Based on this amount.\n");
+		for(i=0;i<qtyDisciplines;i++){
+			printf("\nHow many have been aproved on %s: ", discipline[i].name);
+			scanf("%f", &discipline[i].qtyApproved);
 		}
-		
+		// Is a for used for calculate the total approved students
+		for(i=0;i<qtyDisciplines;i++){
+			students.totalStudApproved += discipline[i].qtyApproved;
+		}
+		system("cls");
+		students.percentApproved = students.totalStudApproved / students.qtyRegStud; // Attribute used for keep the percentage of approved students
+		printf("\nQuantity of approved students: %.2f%c", students.percentApproved, 37); // Out of percentage approved
+		printf("\nQuantity of reproved by frequency: %d", students.qtyReprovedStud); // Out of reproved by frequancy
+		printf("\n---------\nDisciplines:\n");
+		// This for show how many percentage are approved by discipline 
+		for(i=0;i<qtyDisciplines;i++){ // This last exercises become a little confuse, ASK teacher about the right way
+			printf("%s approved: %.0f - %0.2f%c\n", discipline[i].name, discipline[i].qtyApproved, ((discipline[i].qtyApproved/students.qtyRegStud)*100), 37);
+		}	
 	}
 	
 	return 0;
