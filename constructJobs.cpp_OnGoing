@@ -45,7 +45,7 @@ int main(){
 }
 
 --------------------------------------------------------------------------------------------------------------------------------
-
+// this software will specifically remove an id element from linked list
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -56,35 +56,34 @@ typedef struct test{
 
 
 int main() {
-	test *ptr; // Ponteiro corrente
-	test *ptr2; // Ponteiro auxiliar
+	test *ptr; // Ponteiro corrente -- Pointer moving
+	test *ptr2; // Ponteiro auxiliar -- Support pointer
 	int i; // Contador
-	for(i=0;i<6;i++){ // For para preencher a lista de 0 a 5
-		ptr = (test *) malloc(sizeof(test)); // Alocando espaço de memória para o ponteiro
-		ptr->id = i; // Incrementando valor ao atributo id
-		ptr->next = ptr; // Incrementando valor ao NEXT
-		if(i==5){ // Condicional para colocar NULL no fim da lista...
-			ptr->id = i; // Incrementando valor ao ultimo ID
-			ptr->next = NULL; // Incrementando NULL ao ultimo NEXT
+	for(i=0;i<6;i++){ // For para preencher a lista de 0 a 5 -- 'For' for input numbers to 0~5
+		ptr = (test *) malloc(sizeof(test)); // Alocando espaço de memória para o ponteiro -- Reserving memory space
+		ptr->id = i; // Incrementando valor ao atributo id -- adding ID number
+		ptr->next = ptr; // Incrementando valor ao NEXT -- adding next node
+		if(i==5){ // Condicional para colocar NULL no fim da lista...  -- Condicional for add NULL in the last node
+			ptr->id = i; // Incrementando valor ao ultimo ID -- adding value to the last ID
+			ptr->next = NULL; // Incrementando NULL ao ultimo NEXT -- adding NULL for the last node
 		}
-		if(i==4){ // Condicional para remover o número da memória referente ao comparativo
+		if(i==4){ // Condicional para remover o número da memória referente ao comparativo -- conditional for remove the node comparative
 			/*printf("----------------------------------------------\n");
 			printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next);
 			printf("ptr2->id: %d\nptr2->next: %d\n\n", ptr2->id, ptr2->next);
 			printf("Mptr->id: %d\nMptr->next: %d\n\n", &ptr->id, &ptr->next);
-			printf("Mptr2->id: %d\nMptr2->next: %d\n\n", &ptr2->id, &ptr2->next);*/
-			ptr2->next = ptr->next; // Ponteiro auxiliar guardando o valor do próximo nó
-			free(ptr); // Aliviando espaço de memória?????????
-			printf("Removi ptr\n\n"); // Alerta para informar que removeu o nó correspondente
+			printf("Mptr2->id: %d\nMptr2->next: %d\n\n", &ptr2->id, &ptr2->next);*/ // Some prints for test
+			ptr2->next = ptr->next; // Ponteiro auxiliar guardando o valor do próximo nó -- support pointer keeping the current node value
+			free(ptr); // Aliviando espaço de memória????????? -- getting free space??????
+			printf("Removi ptr\n\n"); // Alerta para informar que removeu o nó correspondente -- Alert for test pointer
 			/*printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next);
 			printf("ptr2->id: %d\nptr2->next: %d\n\n", ptr2->id, ptr2->next);
 			printf("Mptr->id: %d\nMptr->next: %d\n\n", &ptr->id, &ptr->next);
 			printf("Mptr2->id: %d\nMptr2->next: %d\n\n", &ptr2->id, &ptr2->next);
-			printf("----------------------------------------------\n");*/
+			printf("----------------------------------------------\n");*/ // Some prints for test
 		}else{
-			printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next); // Impressão da lista com excessão do removido no comparador
+			printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next); // Impressão da lista com excessão do removido no comparador -- print without the node removed
 		}
-		
 	}
 	return 0;
 }
