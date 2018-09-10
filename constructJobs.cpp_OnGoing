@@ -43,3 +43,49 @@ int main(){
 	
 	return 0;
 }
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct test{
+	int id;
+	struct test *next;
+};
+
+
+int main() {
+	test *ptr; // Ponteiro corrente
+	test *ptr2; // Ponteiro auxiliar
+	int i; // Contador
+	for(i=0;i<6;i++){ // For para preencher a lista de 0 a 5
+		ptr = (test *) malloc(sizeof(test)); // Alocando espaço de memória para o ponteiro
+		ptr->id = i; // Incrementando valor ao atributo id
+		ptr->next = ptr; // Incrementando valor ao NEXT
+		if(i==5){ // Condicional para colocar NULL no fim da lista...
+			ptr->id = i; // Incrementando valor ao ultimo ID
+			ptr->next = NULL; // Incrementando NULL ao ultimo NEXT
+		}
+		if(i==4){ // Condicional para remover o número da memória referente ao comparativo
+			/*printf("----------------------------------------------\n");
+			printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next);
+			printf("ptr2->id: %d\nptr2->next: %d\n\n", ptr2->id, ptr2->next);
+			printf("Mptr->id: %d\nMptr->next: %d\n\n", &ptr->id, &ptr->next);
+			printf("Mptr2->id: %d\nMptr2->next: %d\n\n", &ptr2->id, &ptr2->next);*/
+			ptr2->next = ptr->next; // Ponteiro auxiliar guardando o valor do próximo nó
+			free(ptr); // Aliviando espaço de memória?????????
+			printf("Removi ptr\n\n"); // Alerta para informar que removeu o nó correspondente
+			/*printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next);
+			printf("ptr2->id: %d\nptr2->next: %d\n\n", ptr2->id, ptr2->next);
+			printf("Mptr->id: %d\nMptr->next: %d\n\n", &ptr->id, &ptr->next);
+			printf("Mptr2->id: %d\nMptr2->next: %d\n\n", &ptr2->id, &ptr2->next);
+			printf("----------------------------------------------\n");*/
+		}else{
+			printf("ptr->id: %d\nptr->next: %d\n\n", ptr->id, ptr->next); // Impressão da lista com excessão do removido no comparador
+		}
+		
+	}
+	return 0;
+}
+
