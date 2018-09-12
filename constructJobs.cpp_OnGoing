@@ -88,3 +88,48 @@ int main() {
 	return 0;
 }
 
+--------------------------------------------------------------
+// Criar lista adcionando elementos no fim da lista
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct test{
+	int id;
+	struct test *next;
+};
+
+
+int main() {
+	test *ptr; // Ponteiro corrente -- Pointer moving
+	test *ptr2; // Ponteiro auxiliar -- Support pointer
+	test *start; // Cabeça da lista -- List head
+	int i; // Contador
+//	ptr = (test *) malloc(sizeof(test)); // Alocando espaço de memória para o ponteiro -- Reserving memory space
+	start = NULL;
+	//ptr->id = 0;
+//	ptr->next = NULL;
+	//printf("START->ID: %d\nSTART->NEXT: %d\n\n", start->id, start->next);
+	//printf("MMSTART->ID: %d\nMMSTART->NEXT: %d\n\n", &start->id, &start->next);
+	for(i=0;i<6;i++){ // For para preencher a lista de 0 a 5 -- 'For' for input numbers to 0~5
+	    if ( start == NULL){
+		    ptr = (test *) malloc(sizeof(test));
+		    start = ptr;
+		    start->id = i;
+	        start->next = NULL;
+			}
+		else{ 
+	      ptr2 = (test *) malloc(sizeof(test)); 
+	      ptr2->next = NULL;
+		  ptr2->id = i; 
+		  ptr->next = ptr2;
+		  ptr = ptr2;
+	   } 
+	} 
+	ptr = start; 
+	printf("------------------------\n");
+	while ( ptr != NULL) {
+		printf("ptr->id: %d \ptr->next: %p \n\n", ptr->id, ptr->next); // Impressão da lista com excessão do removido no comparador -- print without the node removed
+		ptr = ptr->next;
+	}
+	return 0;
+}
