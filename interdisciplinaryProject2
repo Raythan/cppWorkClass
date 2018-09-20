@@ -1,4 +1,86 @@
 /*
-  
-  
+	in -
+	3 notas (0-100), nome, registro
+	
+	out -
+	aprovados ordenadamente - minimo 150 pontos, 40 em cada uma
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct cand{
+	int matricula;
+	float nota1, nota2, nota3;
+	char nome[100];
+	struct cand *next;
+};
+
+/* void cadastro(int n, cand *ptr, cand *start){
+	int i;
+	cand *ptr2;
+	for(i=0;i<3;i++){
+		if(start==NULL){
+			ptr = (cand *) malloc(sizeof(cand));
+			start = ptr;
+			start->matricula = i;
+			//start->nome = "Carla";
+			start->next = NULL;
+		}else{
+			ptr2 = (cand *) malloc(sizeof(cand));
+			ptr2->next = NULL;
+			ptr2->matricula = i;
+			//ptr2->nome = "Ana";
+			ptr->next = ptr2;
+			ptr = ptr2;
+		}
+	}
+};
+
+void imprimirLista(cand *ptr){
+	int i;
+	
+	for(i=0;i<3;i++){
+		printf("nome: %s, matricula: %d", ptr->nome, ptr->matricula);
+	}
+} */
+
+int main(){
+	// Variáveis
+	cand *ptr, *ptr2, *start; // apontador corrente
+	int n, i; // Número de candidatos;
+	
+	// Estrutura
+	start = NULL;
+	printf("Esse programa informa a quantidade de alunos aprovadas num concurso.\n");
+	printf("A classificacao e medida por uma nota 40 minima em cada prova, e o minimo 150 pontos no total.\n");
+	printf("Preciso saber quantos candidatos serao cadastrados.\n");
+	scanf("%d", &n);
+	
+	for(i=0;i<3;i++){
+		if(start==NULL){
+			ptr = (cand *) malloc(sizeof(cand));
+			start = ptr;
+			start->matricula = i;
+			scanf("%s", &start->nome);
+			start->next = NULL;
+		}else{
+			ptr2 = (cand *) malloc(sizeof(cand));
+			ptr2->next = NULL;
+			ptr2->matricula = i;
+			scanf("%s", &ptr2->nome);
+			ptr->next = ptr2;
+			ptr = ptr2;
+		}
+	}
+	ptr = start;
+	while(ptr!=NULL){
+		printf("Matricula: %d\t", ptr->matricula);
+		ptr = ptr->next;
+	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL){
+		printf("Nome: %s\t", ptr->nome);
+		ptr = ptr->next;
+	}
+}
