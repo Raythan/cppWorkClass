@@ -11,76 +11,166 @@
 
 typedef struct cand{
 	int matricula;
-	float nota1, nota2, nota3;
+	float nota1, nota2, nota3, soma;
 	char nome[100];
 	struct cand *next;
 };
 
-/* void cadastro(int n, cand *ptr, cand *start){
-	int i;
-	cand *ptr2;
-	for(i=0;i<3;i++){
-		if(start==NULL){
-			ptr = (cand *) malloc(sizeof(cand));
-			start = ptr;
-			start->matricula = i;
-			//start->nome = "Carla";
-			start->next = NULL;
-		}else{
-			ptr2 = (cand *) malloc(sizeof(cand));
-			ptr2->next = NULL;
-			ptr2->matricula = i;
-			//ptr2->nome = "Ana";
-			ptr->next = ptr2;
-			ptr = ptr2;
-		}
-	}
-};
+int numeroAleatorio(int menor, int maior) {
+       return rand()%(maior-menor+1) + menor;
+}
 
-void imprimirLista(cand *ptr){
-	int i;
-	
-	for(i=0;i<3;i++){
-		printf("nome: %s, matricula: %d", ptr->nome, ptr->matricula);
-	}
-} */
-
-int main(){
-	// Variáveis
-	cand *ptr, *ptr2, *start; // apontador corrente
-	int n, i; // Número de candidatos;
-	
-	// Estrutura
-	start = NULL;
-	printf("Esse programa informa a quantidade de alunos aprovadas num concurso.\n");
-	printf("A classificacao e medida por uma nota 40 minima em cada prova, e o minimo 150 pontos no total.\n");
-	printf("Preciso saber quantos candidatos serao cadastrados.\n");
-	scanf("%d", &n);
-	
-	for(i=0;i<3;i++){
-		if(start==NULL){
-			ptr = (cand *) malloc(sizeof(cand));
-			start = ptr;
-			start->matricula = i;
-			scanf("%s", &start->nome);
-			start->next = NULL;
-		}else{
-			ptr2 = (cand *) malloc(sizeof(cand));
-			ptr2->next = NULL;
-			ptr2->matricula = i;
-			scanf("%s", &ptr2->nome);
-			ptr->next = ptr2;
-			ptr = ptr2;
-		}
-	}
+void inserir(cand **p, int i){
+    cand *atual, *novo, *anterior;
+    int num;
+    novo = (cand *) malloc(sizeof(cand));
+    atual = *p;
+    anterior = NULL;
+    
+    novo->matricula = i;
+	novo->nota1 = numeroAleatorio(1, 100);
+	novo->nota2 = numeroAleatorio(1, 100);
+	novo->nota3 = numeroAleatorio(1, 100);
+	novo->soma = novo->nota1 + novo->nota2 + novo->nota3; 
+			
+    if(atual == NULL){
+        novo->next = NULL;
+        *p = novo;
+    } else{
+        while(atual != NULL && atual->soma > novo->soma){
+            anterior = atual;
+            atual = atual->next;
+        }
+        novo->next = atual;
+        if(anterior == NULL){
+            *p = novo;
+        } else{
+            anterior->next = novo;
+        }
+    }
+}
+void imprimirCondicional(cand *ptr, cand *start){
+	float notas = 40, status = 150;
 	ptr = start;
+	/* while(ptr!=NULL){
+		printf("Nome: %s\t", ptr->nome);
+		ptr = ptr->next;
+	} */
+	ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Matricula: %d\t", ptr->matricula);
+		ptr = ptr->next;
+	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Nota1: %0.2f\t", ptr->nota1);
+		ptr = ptr->next;
+	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Nota1: %0.2f\t", ptr->nota2);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Nota1: %0.2f\t", ptr->nota3);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Soma: %0.2f\t", ptr->soma);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		if(ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas&&(ptr->soma>=status)) {
+			printf("Aprovado...\t");	
+		}else {
+			printf("Reprovado...\t");	
+		}
+		ptr = ptr->next;
+	}
+}
+
+void imprimir(cand *ptr, cand *start){
+	float notas = 40, status = 150;
+	ptr = start;
+	/* while(ptr!=NULL){
+		printf("Nome: %s\t", ptr->nome);
+		ptr = ptr->next;
+	} */
+	ptr = start; printf("\n");
 	while(ptr!=NULL){
 		printf("Matricula: %d\t", ptr->matricula);
 		ptr = ptr->next;
 	}
 	ptr = start; printf("\n");
 	while(ptr!=NULL){
-		printf("Nome: %s\t", ptr->nome);
+		printf("Nota1: %0.2f\t", ptr->nota1);
 		ptr = ptr->next;
 	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL){
+		printf("Nota1: %0.2f\t", ptr->nota2);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL){
+		printf("Nota1: %0.2f\t", ptr->nota3);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL){
+		printf("Soma: %0.2f\t", ptr->soma);
+		ptr = ptr->next;
+	}ptr = start; printf("\n");
+	while(ptr!=NULL){
+		if(ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas&&(ptr->soma>=status)) {
+			printf("Aprovado...\t");	
+		}else {
+			printf("Reprovado...\t");	
+		}
+		ptr = ptr->next;
+	}
+}
+
+
+int main(){
+	// Variáveis
+	cand *ptr, *ptr2, *start; // apontador corrente
+	int n, i; // Número de candidatos;
+	float add = 1;
+	// Estrutura
+	start = NULL;
+	printf("Esse programa informa a quantidade de alunos aprovadas num concurso.\n");
+	printf("A classificacao e medida por uma nota 40 minima em cada prova, e o minimo 150 pontos no total.\n");
+	//printf("Preciso saber quantos candidatos serao cadastrados.\n");
+	//scanf("%d", &n);
+	
+	for(i=0;i<6;i++){
+		inserir(&start, i);
+		/* if(start==NULL){
+			ptr = (cand *) malloc(sizeof(cand));
+			start = ptr;
+			start->matricula = i;
+			start->nota1 = numeroAleatorio(1, 100);
+			start->nota2 = numeroAleatorio(1, 100);
+			start->nota3 = numeroAleatorio(1, 100);
+			start->soma = start->nota1 + start->nota2 + start->nota3; 
+			/* printf("Digite o nome do candidato %d: \n", i);
+			scanf("\n%[^\n]", &start->nome); 
+			start->next = NULL; 
+		}else{
+			ptr2 = (cand *) malloc(sizeof(cand));
+			ptr2->next = NULL;
+			ptr2->matricula = i;
+			ptr2->nota1 = numeroAleatorio(1, 100);
+			ptr2->nota2 = numeroAleatorio(1, 100);
+			ptr2->nota3 = numeroAleatorio(1, 100);
+			ptr2->soma = ptr2->nota1 + ptr2->nota2 + ptr2->nota3;
+			/* printf("Digite o nome do candidato %d: \n", i);
+			scanf("\n%[^\n]", &ptr2->nome); 
+			ptr->next = ptr2;
+			ptr = ptr2;	
+		}*/
+	}
+	imprimirCondicional(ptr, start);
+	printf("\n\n\n");
+	imprimir(ptr, start);
+	
 }
