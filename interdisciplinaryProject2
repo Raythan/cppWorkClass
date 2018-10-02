@@ -6,8 +6,9 @@
 	aprovados ordenadamente - minimo 150 pontos, 40 em cada uma
 */
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <conio.h>
+#include <stdlib.h>// necessário p/ as funções rand() e srand()
+#include <time.h>//necessário p/ função time()
 
 typedef struct cand{
 	int matricula;
@@ -17,7 +18,7 @@ typedef struct cand{
 };
 
 int numeroAleatorio(int menor, int maior) {
-       return rand()%(maior-menor+1) + menor;
+    return rand()%(maior-menor+1) + menor;
 }
 
 void inserir(cand **p, int i){
@@ -132,8 +133,11 @@ void imprimir(cand *ptr, cand *start){
 
 int main(){
 	// Variáveis
-	cand *ptr, *ptr2, *start; // apontador corrente
-	int n, i; // Número de candidatos;
+	cand *ptr, // Apontador para impressão
+	*ptr2, // Apontador auxiliar
+	*start; // Apontador Corrente
+	int n, // Número de candidatos;
+	i; // Contador
 	float add = 1;
 	// Estrutura
 	start = NULL;
@@ -141,33 +145,9 @@ int main(){
 	printf("A classificacao e medida por uma nota 40 minima em cada prova, e o minimo 150 pontos no total.\n");
 	//printf("Preciso saber quantos candidatos serao cadastrados.\n");
 	//scanf("%d", &n);
-	
+	srand(time(NULL)); // Função para adcionar notas aleatóriamente
 	for(i=0;i<6;i++){
 		inserir(&start, i);
-		/* if(start==NULL){
-			ptr = (cand *) malloc(sizeof(cand));
-			start = ptr;
-			start->matricula = i;
-			start->nota1 = numeroAleatorio(1, 100);
-			start->nota2 = numeroAleatorio(1, 100);
-			start->nota3 = numeroAleatorio(1, 100);
-			start->soma = start->nota1 + start->nota2 + start->nota3; 
-			/* printf("Digite o nome do candidato %d: \n", i);
-			scanf("\n%[^\n]", &start->nome); 
-			start->next = NULL; 
-		}else{
-			ptr2 = (cand *) malloc(sizeof(cand));
-			ptr2->next = NULL;
-			ptr2->matricula = i;
-			ptr2->nota1 = numeroAleatorio(1, 100);
-			ptr2->nota2 = numeroAleatorio(1, 100);
-			ptr2->nota3 = numeroAleatorio(1, 100);
-			ptr2->soma = ptr2->nota1 + ptr2->nota2 + ptr2->nota3;
-			/* printf("Digite o nome do candidato %d: \n", i);
-			scanf("\n%[^\n]", &ptr2->nome); 
-			ptr->next = ptr2;
-			ptr = ptr2;	
-		}*/
 	}
 	imprimirCondicional(ptr, start);
 	printf("\n\n\n");
