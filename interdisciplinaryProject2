@@ -34,7 +34,7 @@ void inserir(cand **p, int i){
 	novo->nota3 = numeroAleatorio(1, 100);
 	novo->soma = novo->nota1 + novo->nota2 + novo->nota3; 
 			
-    if(atual == NULL){
+    if(atual == NULL){ // Reler para aprender como organizar a lista
         novo->next = NULL;
         *p = novo;
     } else{
@@ -130,7 +130,6 @@ void imprimir(cand *ptr, cand *start){
 	}
 }
 
-
 int main(){
 	// Variáveis
 	cand *ptr, // Apontador para impressão
@@ -152,5 +151,4 @@ int main(){
 	imprimirCondicional(ptr, start);
 	printf("\n\n\n");
 	imprimir(ptr, start);
-	
 }
