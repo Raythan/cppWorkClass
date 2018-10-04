@@ -25,7 +25,7 @@ int numeroAleatorio(int menor, int maior) {
     return rand()%(maior-menor+1) + menor;
 }
 
-void inserir(cand **p, int i){
+void inserir(cand **p, int i, char nome[][10]){
 	
 	
     cand *atual, *novo, *anterior;
@@ -33,7 +33,7 @@ void inserir(cand **p, int i){
     novo = (cand *) malloc(sizeof(cand));
     atual = *p;
     anterior = NULL;
-    char nome[6][10] = {"Pedro", "Pepino", "Paulo", "Pombo", "Pedra", "Claro"};
+    
     
     
     novo->matricula = i;
@@ -147,7 +147,7 @@ int main(){
 	int n, // Número de candidatos;
 	i; // Contador
 	float add = 1;
-	
+	char nome[6][10] = {"Pedro", "Pepino", "Paulo", "Pombo", "Pedra", "Claro"};
 	
 	// Estrutura
 	start = NULL;
@@ -157,7 +157,7 @@ int main(){
 	//scanf("%d", &n);
 	srand(time(NULL)); // Função para adcionar notas aleatóriamente
 	for(i=0;i<6;i++){
-		inserir(&start, i);
+		inserir(&start, i, nome);
 	}
 	imprimirCondicional(ptr, start);
 	printf("\n\n\n");
