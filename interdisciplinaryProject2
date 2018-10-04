@@ -7,13 +7,17 @@
 */
 #include <stdio.h>
 #include <conio.h>
-#include <stdlib.h>// necessário p/ as funções rand() e srand()
-#include <time.h>//necessário p/ função time()
+#include <stdlib.h>	// necessário p/ as funções rand() e srand()
+#include <time.h>	//necessário p/ função time()
+#include <iostream>
+#include <string.h>	// Necessário para usar strings
+
+using namespace std;
 
 typedef struct cand{
 	int matricula;
 	float nota1, nota2, nota3, soma;
-	char nome[100];
+	char nome[10];
 	struct cand *next;
 };
 
@@ -22,27 +26,32 @@ int numeroAleatorio(int menor, int maior) {
 }
 
 void inserir(cand **p, int i){
+	
+	
     cand *atual, *novo, *anterior;
     int num;
     novo = (cand *) malloc(sizeof(cand));
     atual = *p;
     anterior = NULL;
+    char nome[6][10] = {"Pedro", "Pepino", "Paulo", "Pombo", "Pedra", "Claro"};
+    
     
     novo->matricula = i;
 	novo->nota1 = numeroAleatorio(1, 100);
 	novo->nota2 = numeroAleatorio(1, 100);
 	novo->nota3 = numeroAleatorio(1, 100);
+	strcpy(novo->nome, nome[i]);
 	novo->soma = novo->nota1 + novo->nota2 + novo->nota3; 
 			
-    if(atual == NULL){ // Reler para aprender como organizar a lista
+    if(atual == NULL){ // Se não tiver elementos em ptr ele aponta para o nó criado
         novo->next = NULL;
         *p = novo;
-    } else{
-        while(atual != NULL && atual->soma > novo->soma){
-            anterior = atual;
-            atual = atual->next;
+    } else{ // Se existir elementos vai checando
+        while(atual != NULL && atual->soma > novo->soma){ // Soma do atual maior que o novo? se sim, 
+            anterior = atual; // o anterior antes 'nulo' recebe o atual
+            atual = atual->next; // atual recebe o próximo
         }
-        novo->next = atual;
+        novo->next = atual; // próximo do que foi criado recebe o atual
         if(anterior == NULL){
             *p = novo;
         } else{
@@ -52,14 +61,14 @@ void inserir(cand **p, int i){
 }
 void imprimirCondicional(cand *ptr, cand *start){
 	float notas = 40, status = 150;
-	ptr = start;
-	/* while(ptr!=NULL){
-		printf("Nome: %s\t", ptr->nome);
-		ptr = ptr->next;
-	} */
 	ptr = start; printf("\n");
 	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
 		printf("Matricula: %d\t", ptr->matricula);
+		ptr = ptr->next;
+	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
+		printf("Nome: %s\t", ptr->nome);
 		ptr = ptr->next;
 	}
 	ptr = start; printf("\n");
@@ -92,14 +101,14 @@ void imprimirCondicional(cand *ptr, cand *start){
 
 void imprimir(cand *ptr, cand *start){
 	float notas = 40, status = 150;
-	ptr = start;
-	/* while(ptr!=NULL){
-		printf("Nome: %s\t", ptr->nome);
-		ptr = ptr->next;
-	} */
 	ptr = start; printf("\n");
 	while(ptr!=NULL){
 		printf("Matricula: %d\t", ptr->matricula);
+		ptr = ptr->next;
+	}
+	ptr = start; printf("\n");
+	while(ptr!=NULL){
+		printf("Nome: %s\t", ptr->nome);
 		ptr = ptr->next;
 	}
 	ptr = start; printf("\n");
@@ -138,6 +147,8 @@ int main(){
 	int n, // Número de candidatos;
 	i; // Contador
 	float add = 1;
+	
+	
 	// Estrutura
 	start = NULL;
 	printf("Esse programa informa a quantidade de alunos aprovadas num concurso.\n");
@@ -151,4 +162,5 @@ int main(){
 	imprimirCondicional(ptr, start);
 	printf("\n\n\n");
 	imprimir(ptr, start);
+	
 }
