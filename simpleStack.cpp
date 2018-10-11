@@ -66,6 +66,8 @@ int pushAuto(struct stackList **top, int a){ // Função que insere elementos al
 		push(top, numeroAleatorio(1, 100));
 		i++;
 	}
+	system("cls");
+	printf("Numeros adicionados com sucesso!\n\n\n");
 };
 int destroy(struct stackList **top){ // Função destroi lista chamando a função pop() que elimina elemento por elemento da cabeça da lista
 	system("cls");
@@ -75,6 +77,8 @@ int destroy(struct stackList **top){ // Função destroi lista chamando a funç�
 		while(*top!=NULL){
 			pop(top);
 		}
+		system("cls");
+		printf("Lista apagada!\n\n\n");
 	}
 	
 };
@@ -86,7 +90,7 @@ int header(int x){ // Cabeçalho que mostra ao usuário o que ele pode fazer
 	printf("3 - Mostrar primeiro elemento da lista.\n");
 	printf("4 - Mostrar lista.\n");
 	printf("5 - Adicionar N numeros automaticamente.\n");
-	printf("6 - Destruir lista.\n");
+	printf("6 - Apaga lista.\n");
 	printf("0 - Sair.\n");
 	scanf("%d", &x);
 	system("cls");
@@ -128,5 +132,6 @@ int main(){
 				break;	
 		}
 	}
+	printf("\n\nPrograma para uso publico.\nDesenvolvido por: Raythan Padovani Abreu Machado.\n\n");
 	return 0;
 }
