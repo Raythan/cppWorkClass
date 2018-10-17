@@ -17,10 +17,15 @@ typedef struct q{ // Struct que vai apontar para a cabeça e fim da lista
 	struct queueList *rear;
 };
 
-void rear(queueList *lista, int a){
-	q *ptr;
+void rear(q *pointer, queueList *lista, int a){ // Adicionar elementos no fim da lista
+	queueList *ptr;
+	ptr = (queueList *)malloc(sizeof(queueList));
+	ptr->data = a;
+	pointer->front = pointer->rear = lista; // <<<<<<<<<<<<<< ERRO NESSA PARTE
+	// printf("pointer->front->data: %d\npointer->rear->data: %d\nlista->data: %d.", pointer->front->data, pointer->rear->data, lista->data );
 	
-}; // Adicionar elementos no fim da lista
+}; 
+
 void front(); // Remover elementos
 void display(); // Imprime a lista
 void rearAleatorio(); // Insere numeros aleatórios na fila
@@ -43,6 +48,7 @@ int main(){
 	int n = 1, // Quantidade de números para serem adicionados e 
 	d = 1; // Decisao do switch
 	queueList lista; // lista
+	q *pointer;
 	
 	// Implementação
 	srand(time(NULL)); // Funcao necessária para os numeros serem inseridos sem repetição
@@ -52,7 +58,7 @@ int main(){
 			case 1:
 				printf("Que numero gostaria de adicionar?\n");
 				scanf("%d", &n);
-				rear(&lista, n);
+				rear(pointer, &lista, n);
 				break;
 			case 2:
 				
