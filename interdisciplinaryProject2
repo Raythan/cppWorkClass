@@ -26,15 +26,10 @@ int numeroAleatorio(int menor, int maior) {
 }
 
 void inserir(cand **p, int i, char nome[][10]){
-	
-	
     cand *atual, *novo, *anterior;
-    int num;
     novo = (cand *) malloc(sizeof(cand));
     atual = *p;
     anterior = NULL;
-    
-    
     
     novo->matricula = i;
 	novo->nota1 = numeroAleatorio(1, 100);
