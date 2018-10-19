@@ -11,6 +11,38 @@ typedef struct node{ // Struct para ser usada como lista...
 	struct node *next;	
 };
 
+
+
+void insertMaiorMenor(node **p, int a){ // Do maior para o menor
+	// Variáveis
+    node *ptr2, *ptr, *ptr3;
+    ptr = (node *) malloc(sizeof(node));
+    ptr2 = *p;
+    ptr3 = NULL;
+    
+    // Contruct
+    ptr->data = a;
+	
+	// Métodos	
+    if(ptr2 == NULL){ // Se não tiver elementos em ptr ele aponta para o nó criado
+        ptr->next = NULL;
+        *p = ptr;
+    }else{ // Se existir elementos vai checando
+        while(ptr2 != NULL && ptr2->data > ptr->data){ // valor do atual maior que o novo? se sim, 
+            ptr3 = ptr2; // o anterior antes 'nulo' recebe o atual
+            ptr2 = ptr2->next; // atual recebe o próximo
+        }
+        ptr->next = ptr2; // próximo do que foi criado recebe o atual
+        if(ptr3 == NULL){ // Se o anterior for igual a nulo entao o atual recebe novo
+            *p = ptr;
+        } else{ // Se não o anterior recebe o novo
+            ptr3->next = ptr;
+        }
+    }
+    system("cls");
+	printf("\nAdicionei %d a lista\n\n", a);
+}
+
 void insert(node **front, node **rear, int a){ // Adicionar elementos no fim da lista
 	int i = 0;
 	if(*front==NULL){
@@ -22,37 +54,28 @@ void insert(node **front, node **rear, int a){ // Adicionar elementos no fim da 
 		printf("\nAdicionei %d a lista que estava vazia\n\n", a);
 	}else{
 		node *ptr = (node *)malloc(sizeof(node)); // valor do nó a ser atribuido
-		node *ptr2 = *front; // checa posição atual
-		node *ptr3; // ponteiro auxiliar
+		node *ptr2 = *rear; // checa posição atual
 		
 		// Parte que atribui os valores a serem adicionados
 		ptr->data = a;
 		ptr->next = NULL;
 		
-		// Regras que fazem criar a lista ordenada							/********************************
-		for(;ptr2!=NULL&&ptr2->data>ptr->data;){							// Tentar resolver a logica de ordenação //
-			printf("ptr2->data: %d\n", ptr2->data);							//********************************
-			ptr3 = ptr2;
-			ptr2 = ptr2->next;
-			printf("Erro no for\n");
-		}
-		/* ptr2->next = ptr;
+		ptr2->next = ptr;
 		ptr2 = ptr;
-		*rear = ptr2; */
+		*rear = ptr2;
 		printf("\nAdicionei %d a lista\n\n", a);
 	}
 }; 
+
 
 void front(); // Remover elementos
 void display(node *ptr, node *rear){ // Imprime a lista
 	system("cls");
 	printf("Primeiro -> ");
 	while(ptr!=NULL){
-		if(ptr!=rear){
-			printf("%d -> ", ptr->data);
-		}else{
-			printf("%d ", ptr->data);
-		}
+		//if(ptr!=rear){
+			printf("| %d | ", ptr->data);
+		//}
 		
 		ptr = ptr->next;
 	}
