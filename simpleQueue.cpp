@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,27 +6,59 @@ int numeroAleatorio(int menor, int maior) { // Função que adiciona números al
     return rand()%(maior-menor+1) + menor;
 }
 
-typedef struct queueList{ // Struct para ser usada como lista...
+typedef struct node{ // Struct para ser usada como lista...
 	int data;
-	struct queueList *next;	
+	struct node *next;	
 };
 
-typedef struct q{ // Struct que vai apontar para a cabeça e fim da lista
-	struct queueList *front;
-	struct queueList *rear;
-};
-
-void rear(q *pointer, queueList *lista, int a){ // Adicionar elementos no fim da lista
-	queueList *ptr;
-	ptr = (queueList *)malloc(sizeof(queueList));
-	ptr->data = a;
-	pointer->front = pointer->rear = lista; // <<<<<<<<<<<<<< ERRO NESSA PARTE
-	// printf("pointer->front->data: %d\npointer->rear->data: %d\nlista->data: %d.", pointer->front->data, pointer->rear->data, lista->data );
-	
+void insert(node **front, node **rear, int a){ // Adicionar elementos no fim da lista
+	int i = 0;
+	if(*front==NULL){
+		node *ptr = (node *)malloc(sizeof(node));
+		*front = *rear = ptr;
+		ptr->data = a;
+		ptr->next = NULL;
+		system("cls");
+		printf("\nAdicionei %d a lista que estava vazia\n\n", a);
+	}else{
+		node *ptr = (node *)malloc(sizeof(node)); // valor do nó a ser atribuido
+		node *ptr2 = *front; // checa posição atual
+		node *ptr3; // ponteiro auxiliar
+		
+		// Parte que atribui os valores a serem adicionados
+		ptr->data = a;
+		ptr->next = NULL;
+		
+		// Regras que fazem criar a lista ordenada							/********************************
+		for(;ptr2!=NULL&&ptr2->data>ptr->data;){							// Tentar resolver a logica de ordenação //
+			printf("ptr2->data: %d\n", ptr2->data);							//********************************
+			ptr3 = ptr2;
+			ptr2 = ptr2->next;
+			printf("Erro no for\n");
+		}
+		/* ptr2->next = ptr;
+		ptr2 = ptr;
+		*rear = ptr2; */
+		printf("\nAdicionei %d a lista\n\n", a);
+	}
 }; 
 
 void front(); // Remover elementos
-void display(); // Imprime a lista
+void display(node *ptr, node *rear){ // Imprime a lista
+	system("cls");
+	printf("Primeiro -> ");
+	while(ptr!=NULL){
+		if(ptr!=rear){
+			printf("%d -> ", ptr->data);
+		}else{
+			printf("%d ", ptr->data);
+		}
+		
+		ptr = ptr->next;
+	}
+	printf("<- Ultimo.");
+	printf("\n\n\n");
+}; 
 void rearAleatorio(); // Insere numeros aleatórios na fila
 
 int header(int x){ // Cabeçalho que mostra ao usuário o que ele pode fazer
@@ -38,6 +69,7 @@ int header(int x){ // Cabeçalho que mostra ao usuário o que ele pode fazer
 	printf("5 - Adicionar N numeros automaticamente.\n");
 	printf("6 - Apaga lista.\n");
 	printf("0 - Sair.\n");
+	printf("Opcao: ");
 	scanf("%d", &x);
 	system("cls");
 	return x;
@@ -46,9 +78,12 @@ int header(int x){ // Cabeçalho que mostra ao usuário o que ele pode fazer
 int main(){
 	//Variáveis
 	int n = 1, // Quantidade de números para serem adicionados e 
-	d = 1; // Decisao do switch
-	queueList lista; // lista
-	q *pointer;
+	d = 1;  // Decisao do switch
+	node *front, // cabeça
+	*rear, // fim da lista
+	*ptr; // percorre a lista
+	
+	rear = front = NULL;
 	
 	// Implementação
 	srand(time(NULL)); // Funcao necessária para os numeros serem inseridos sem repetição
@@ -58,7 +93,8 @@ int main(){
 			case 1:
 				printf("Que numero gostaria de adicionar?\n");
 				scanf("%d", &n);
-				rear(pointer, &lista, n);
+				insert(&front, &rear, n);
+				//printf("front->data: %d\nfront->next: %d\nrear->data: %d\nrear->next: %d\n\n", front->data, front->next, rear->data, rear->next);
 				break;
 			case 2:
 				
@@ -67,7 +103,8 @@ int main(){
 				
 				break;
 			case 4:
-				
+				ptr = front;
+				display(ptr, rear);
 				break;
 			case 5:
 				
