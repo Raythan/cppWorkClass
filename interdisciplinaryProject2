@@ -78,11 +78,11 @@ void imprimirCondicional(cand *ptr, cand *start){
 	}
 	ptr = start; printf("\n");
 	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
-		printf("Nota1: %0.2f\t", ptr->nota2);
+		printf("Nota2: %0.2f\t", ptr->nota2);
 		ptr = ptr->next;
 	}ptr = start; printf("\n");
 	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
-		printf("Nota1: %0.2f\t", ptr->nota3);
+		printf("Nota3: %0.2f\t", ptr->nota3);
 		ptr = ptr->next;
 	}ptr = start; printf("\n");
 	while(ptr!=NULL&&ptr->soma>=status&&ptr->nota1>=notas&&ptr->nota2>=notas&&ptr->nota3>=notas){
@@ -118,11 +118,11 @@ void imprimir(cand *ptr, cand *start){
 	}
 	ptr = start; printf("\n");
 	while(ptr!=NULL){
-		printf("Nota1: %0.2f\t", ptr->nota2);
+		printf("Nota2: %0.2f\t", ptr->nota2);
 		ptr = ptr->next;
 	}ptr = start; printf("\n");
 	while(ptr!=NULL){
-		printf("Nota1: %0.2f\t", ptr->nota3);
+		printf("Nota3: %0.2f\t", ptr->nota3);
 		ptr = ptr->next;
 	}ptr = start; printf("\n");
 	while(ptr!=NULL){
