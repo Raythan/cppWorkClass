@@ -157,10 +157,10 @@ void destroy(node **f, node *pp){ // Apaga lista por completo
 	printf("\n\n\n");
 };
 
-void organizarMaiorMenor(node **ptrAux){ // ordena lista do maior para o menor
+void organizarMaiorMenor(node *ptrAux){ // ordena lista do maior para o menor
 	system("cls");
-	node *p, *p2;
-	p = *ptrAux;
+	node *p, *p2, *p3;
+	p = ptrAux;
 	if(p==NULL){
 		printf("Lista vazia!");
 	}else{
@@ -168,12 +168,10 @@ void organizarMaiorMenor(node **ptrAux){ // ordena lista do maior para o menor
 			printf("A lista tem apenas 1 elemento!");
 		}else{
 			p2 = p->next;
-			//printf("p2->data: %d\np2->next: %d\n", p2->data, p2->next);
 			if(p->data>p2->data){
-				printf("Entrei no if que precisava\n");
-				p->next = p2->next;
+				//printf("Entrei no if que precisava\n");
+				p->next = NULL;
 				p2->next = p;
-				p->next = p3;
 			}else{
 				printf("A lista ja esta organizada.\n");
 			}
@@ -234,8 +232,8 @@ int main(){
 				destroy(&front, ptr);
 				break;
 			case 6:
-				ptr = front; // Continuar daqui
-				organizarMaiorMenor(&ptr);
+				ptr = front;
+				organizarMaiorMenor(ptr);
 				break;
 			case 7:
 				break;
