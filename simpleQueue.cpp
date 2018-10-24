@@ -171,7 +171,7 @@ void organizarMaiorMenor(node *ptrAux){ // ordena lista do maior para o menor
 			if(p->data>p2->data){
 				//printf("Entrei no if que precisava\n");
 				p->next = NULL;
-				p2->next = p;
+				p2 = p;
 			}else{
 				printf("A lista ja esta organizada.\n");
 			}
@@ -232,7 +232,6 @@ int main(){
 				destroy(&front, ptr);
 				break;
 			case 6:
-				ptr = front;
 				organizarMaiorMenor(ptr);
 				break;
 			case 7:
