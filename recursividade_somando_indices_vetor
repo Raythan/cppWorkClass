@@ -1,0 +1,23 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
+int numeroAleatorio(int menor, int maior) {
+    return rand()%(maior-menor+1) + menor;
+}
+
+int sum(int i, int vet[]) {
+	int soma;
+	if(i == 0){
+ 		return (soma=vet[0]);
+	}else{
+		soma = sum(i-1, vet);
+		printf("%d\n", soma);
+		return soma+=vet[i];
+	}
+}
+int main(){
+	int vet[6] = {1,2,3,4,5,6}, n = 5;
+	printf("%d", sum(n, vet));
+	return 0;
+} 
