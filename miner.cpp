@@ -1,5 +1,5 @@
 //On going
-#include <stdbli.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #define MAX 10
