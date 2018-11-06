@@ -15,7 +15,7 @@ void printShotable(int vt[][MAX]){
 		printf("\n");
 	}
 };
-void printTarget(int vt[][MAX]){
+void printTarget(int vtv[][MAX]){
 	int i, j;
 	printf("\n\n  | ");
 	for(j=0;j<MAX;j++){
@@ -25,17 +25,20 @@ void printTarget(int vt[][MAX]){
 	for(i=0;i<MAX;i++){
 		printf("%d | ", i);
 		for(j=0;j<MAX;j++){
-			if(vt[i][j]!=0){
-				printf("S | ");
+			if(vtv[i][j]==NULL){
+				printf("  | ");
+			}else if(vtv[i][j]==3){
+				printf("0 | ", vtv[i][j]);
+			}else if(vtv[i][j]==4){
+				printf("X | ", vtv[i][j]);
 			}else{
-				printf("N | ");
-			}
-			
+				printf("  | ", vtv[i][j]);
+			}			
 		}
 		printf("\n");
 	}
 };
-int preenche(int vt[][MAX]){
+void preenche(int vt[][MAX]){
 	int i, j;
 	for(i=0;i<MAX;i++){
 		for(j=0;j<MAX;j++){
@@ -43,14 +46,33 @@ int preenche(int vt[][MAX]){
 		}
 	}
 };
-
+void preencheAlvo(int vt[][MAX], int vt2[][MAX], int x, int y, int i){
+	if(vt2[x][y]==3){
+		printf("Voce ja jogou nessa posicao.");
+	}else if(vt[x][y]==0){
+		vt2[x][y] = 3;	
+	}else if(vt[x][y]==1){
+		printf("Perdeu, acertou a mina.");
+		vt2[x][y] = 4;
+		i = 0;
+	}
+};
 
 int main(){
 	//Variáveis
-	int vt[MAX][MAX], vt2[MAX][MAX];	
+	int vt[MAX][MAX], vt2[MAX][MAX], x, y, i=1;	
 	srand(time(NULL));
 	preenche(vt);
-	printShotable(vt);
-	printTarget(vt);
+	while(i!=0){
+		printShotable(vt);
+		printTarget(vt2);
+		printf("Linha: ");
+		scanf("%d", &x);
+		printf("Coluna: ");
+		scanf("%d", &y);
+		system("cls");
+		preencheAlvo(vt, vt2, x, y, i);
+		printf("\nUltima jogada: %d %d\n%d\n\n", x, y, i);
+	}
 	return 0;
 }
