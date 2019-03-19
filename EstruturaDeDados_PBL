@@ -1,0 +1,48 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <locale.h>
+
+typedef struct node{
+	int data;
+	struct node *next;
+};
+int AdicionaNaLista(int tamLista){
+	
+}
+void RemoveDaLista(int tamLista){
+	
+}
+void ImprimeLista(){
+	
+}
+void DestroiLista(){
+	
+}
+void ExecutaJosephus(){
+	
+}
+int NumeroAleatorio(int menor, int maior) { // Função que adiciona números aleatoriamente
+    return rand()%(maior-menor+1) + menor;
+}
+void ImprimeCabecalho(){
+	cout << "************************************************\n";
+	cout << "*     Preciso saber qual ação devo tomar       *\n";
+	cout << "************************************************\n";
+	cout << "(1) - Imprimir lista.\n";
+	cout << "(2) - Adicionar números a lista manualmente.\n";
+	cout << "(3) - Remover 1 número da lista manualmente.\n";
+}
+
+int main(){
+	int tamanhoDaLista = 0;
+	char decisao = 's';
+	node lista, *ptrLista, *ptrLista2, *ptrLista3; 
+	setlocale(LC_ALL, "");
+	
+	ImprimeCabecalho();
+//	while(decisao == 's' or decisao == 'S'){
+//		
+//	}
+	
+	return 0;
+}
