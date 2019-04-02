@@ -1,0 +1,293 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <locale.h>
+
+using namespace std;
+
+struct node{
+	int data;
+	struct node *next;
+};
+
+int AdicionaNaLista(int tamLista, node **head, node **nail, int NumeroAAdicionar){
+	system("cls");
+	if(*head==NULL){
+		node *ptr = (node*)malloc(sizeof(node));
+		*head = *nail = ptr;
+		ptr->data = NumeroAAdicionar;
+		ptr->next = NULL; 
+		tamLista++;
+		cout << "Adicionei " << NumeroAAdicionar << " a lista que estava vazia\n\n\n";
+	}else{
+		// valor do nó a ser atribuido
+		node *ptr = (node *)malloc(sizeof(node));
+		// checa posição atual
+		node *ptr2 = *nail;
+		
+		// Parte que atribui os valores a serem adicionados
+		ptr->data = NumeroAAdicionar;
+		ptr->next = NULL;
+		// Aponta o ponteiro auxiliar que aponta para a calda
+		// ter como next o struct criado
+		ptr2->next = ptr;
+		// Aponta para o ponteiro que agora é calda
+		ptr2 = ptr;
+		// Atrualiza posição da calda
+		*nail = ptr2;
+		tamLista++;
+		cout << "Adicionei " << NumeroAAdicionar << " a lista\n\n\n";
+	}
+	return tamLista;
+}
+
+int RemoveDaLista(int tamLista, node **head, node **nail){
+	int counterSeExiste = 0, numeroARemover;
+	cout << "Que número gostaria de remover?\n";
+	cin >> numeroARemover;
+	system("cls");
+	node *ptrVerificaSeExiste = *head;
+	while(ptrVerificaSeExiste != NULL){
+		if(ptrVerificaSeExiste->data == numeroARemover){
+			counterSeExiste++;
+			break;
+		}
+		ptrVerificaSeExiste = ptrVerificaSeExiste->next;
+	}
+	if(*head==NULL){
+		cout << "A lista está vazia! Não posso remover nenhum número.";
+	}else{
+		if(counterSeExiste > 0){
+			node *ptrCorre, *ptrCorre2, *ptrCorre3;
+			ptrCorre2 = *head;
+			if(tamLista == 1){
+				if(ptrCorre2->data == numeroARemover){
+					free(ptrCorre2);
+					*head = NULL;
+					tamLista--;
+				}
+			}
+			if(tamLista == 2){
+				ptrCorre = ptrCorre2->next;
+				if(ptrCorre2->data == numeroARemover){
+					free(ptrCorre2);
+					*head = ptrCorre;
+					tamLista--;
+				}
+				if(ptrCorre->data == numeroARemover){
+					free(ptrCorre);
+					
+					if(*head == ptrCorre){
+						*head = NULL;
+					}
+					else{
+						(*head)->next = NULL;
+						*nail = *head;
+					}
+					tamLista--;
+				}
+			}
+			if(tamLista > 2){
+				ptrCorre = ptrCorre2->next;
+				while(ptrCorre != NULL){
+					if(ptrCorre2->data == numeroARemover){
+						free(ptrCorre2);
+						*head = ptrCorre;
+						ptrCorre2 = *head;
+						if(ptrCorre2->next != NULL)
+							ptrCorre = ptrCorre2->next;
+						else if(ptrCorre2->next == NULL && ptrCorre2->data == numeroARemover){
+							free(ptrCorre2);
+							*head = NULL;
+							ptrCorre = NULL;
+						}
+						tamLista--;
+					}else{
+						if(ptrCorre->data == numeroARemover){
+							ptrCorre2->next = ptrCorre->next;
+							free(ptrCorre);
+							ptrCorre = ptrCorre2->next;
+							tamLista--;
+						}else{
+							ptrCorre = ptrCorre->next;
+							ptrCorre2 = ptrCorre2->next;
+						}
+					}
+				}
+				if(ptrCorre2 == NULL)
+					*head = NULL;
+				else
+					*nail = ptrCorre2;
+			}
+			cout << "Todos os " << numeroARemover << " foram removidos.";
+		}
+		else
+			cout << "Esse número não está na lista";
+	}
+	cout << "\n\n\n";
+	return tamLista;
+}
+
+void RemoveDestroi(node **head, node *ptrCorre){  // Remover elementos
+	if(*head==NULL){
+		cout << "Lista vazia!";
+	}else{
+		ptrCorre = *head;
+		cout << ptrCorre->data << " removido.\n";
+		*head = ptrCorre->next;
+		free(ptrCorre);
+	}
+}
+
+int DestroiLista(node **head, node *ptrAux, int tamanho){ // Apaga lista por completo
+	system("cls");
+	if(*head==NULL){
+		cout << "Lista vazia!";
+	}else{
+		while(*head!=NULL){
+			RemoveDestroi(head, ptrAux);
+		}
+		cout << "\nLista apagada!";
+	}
+	cout << "\n\n\n";
+	return tamanho = 0;
+}
+
+void ImprimeLista(node *ptr, int tamanho){
+	system("cls");
+	if(ptr!=NULL){
+		cout << "\nPrimeiro -> | ";
+		while(ptr!=NULL){
+			cout << ptr->data << " | ";
+			ptr = ptr->next;
+		}
+		cout << "Lista de tamanho: " << tamanho;
+	}else{
+		cout << "Lista vazia!";
+	}
+	cout << "\n\n\n";
+}
+
+void ExecutaJosephus(node *ptrCorre, node **head, node **nail){
+	if(*head != *nail){
+		(*nail)->next = *head;
+		*nail = *head;
+	}
+	
+}
+
+int NumeroAleatorio(int menor, int maior) { // Função que adiciona números aleatoriamente
+    return rand()%(maior-menor+1) + menor;
+}
+
+void ImprimeCabecalho(){
+	cout << "************************************************\n" <<
+			"*     Preciso saber qual ação devo tomar       *\n" <<
+			"************************************************\n" <<
+			"(1) - Imprimir lista.\n" <<
+			"(2) - Adicionar números a lista manualmente.\n" <<
+			"(3) - Remover 1 número da lista manualmente.\n" <<
+			"(4) - Destruir a lista.\n" <<
+			"(5) - Adicionar (N) números a lista.\n" <<
+			"(6) - Executar Josephus.\n" <<
+			"(7) - Sair.\n";
+}
+
+void ImprimeSaida(){
+	system("cls");
+	cout << "\n\n\n****************************************************\n" <<
+			"* Obrigado por utilizar os softwares da UNIFACCAMP *\n" <<
+			"* Esse software é livre de direitos autorais.      *\n" <<
+			"* Produto produzido pelo aluno do 4º semestre.     *\n" <<
+			"* Data: 31-03-2019.                                *\n" <<
+			"* Raythan Padovani Abreu Machado. RA: 27822.       *\n" <<
+			"****************************************************\n\n\n";
+}
+int main(){
+	int tamanhoDaLista = 0, iteracao = 0, NumeroParaRemover = 0;
+	char decisaoMain = 's';
+	node *head = NULL, *nail = NULL, *ptr; 
+	setlocale(LC_ALL, "");
+	
+	while(decisaoMain == 's'){
+		ImprimeCabecalho();
+		cin >> iteracao;
+		switch(iteracao){
+			case 1:
+				ptr = head;
+				ImprimeLista(ptr, tamanhoDaLista);
+				break;
+			case 2:
+				system("cls");
+				int numeroParaInserir;
+				cout << "Qual número você gostaria de adicionar?\n";
+				cin >> numeroParaInserir;
+				tamanhoDaLista = AdicionaNaLista(tamanhoDaLista, &head, &nail, numeroParaInserir);
+				break;
+			case 3:
+				tamanhoDaLista = RemoveDaLista(tamanhoDaLista, &head, &nail);
+				break;
+			case 4:
+				tamanhoDaLista = DestroiLista(&head, ptr, tamanhoDaLista);
+				break;
+			case 5:
+				system("cls");
+				int qtdNumerosAAdicionar, rangeMenor, rangeMaior;
+				cout << "Quantos números devo adicionar a lista?\n";
+				cin >> qtdNumerosAAdicionar;
+				cout << "Qual o menor número que posso adicionar?\n";
+				cin >> rangeMenor;
+				cout << "Qual o maior número que posso adicionar?\n";
+				cin >> rangeMaior;
+				for(int i = 0; i < qtdNumerosAAdicionar; i++)
+					tamanhoDaLista = AdicionaNaLista(tamanhoDaLista, &head, &nail, NumeroAleatorio(rangeMenor, rangeMaior));
+				break;
+			case 6:
+				int counterK, j;
+				j = 0;
+				if(tamanhoDaLista > 0){
+					cout << "De quanto em quantos passos devo seguir?\n";
+					cin >> counterK;
+					node *ptr2;
+					ptr2 = head;
+					ptr = ptr2->next;
+					nail->next = head;
+					while(tamanhoDaLista > 1){
+						if(j == counterK){
+							ptr2->next = ptr->next;
+							free(ptr);
+							ptr = ptr2->next;
+							tamanhoDaLista--;
+							j = 0;
+						}
+						ptr = ptr->next;
+						ptr2 = ptr2->next;
+						j++;
+					}
+					head = ptr2;
+					nail = ptr;
+					nail->next = NULL;
+				}else{
+					cout << "Sua lista está vazia, não posso executar o método de Josephus!\n\n\n";
+				}
+				break;
+			case 7:
+				system("cls");
+				cout << "Você escolheu sair do programa.\n" <<
+						"Tem certeza disso?\n" <<
+						"(1) - Sim.\n(2) - Não.\n";
+						for(int decisaoSwitch7 = 0; decisaoSwitch7 == 0;){
+							cin >> decisaoSwitch7;
+							if(decisaoSwitch7 == 1){
+								decisaoMain = 'n';
+								ImprimeSaida();
+							}else{
+								system("cls");
+								cout << "\nAcredito que você tenha pressionado sem intenção.\n\n";
+							}
+						}	
+				break;
+		}
+	}
+	return 0;
+}
