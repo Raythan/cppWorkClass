@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <locale.h>
+#include <ctime>
 
 using namespace std;
 
@@ -173,7 +174,6 @@ void ExecutaJosephus(node *ptrCorre, node **head, node **nail){
 		(*nail)->next = *head;
 		*nail = *head;
 	}
-	
 }
 
 int NumeroAleatorio(int menor, int maior) { // Função que adiciona números aleatoriamente
@@ -208,6 +208,7 @@ int main(){
 	char decisaoMain = 's';
 	node *head = NULL, *nail = NULL, *ptr; 
 	setlocale(LC_ALL, "");
+	srand(time(0));
 	
 	while(decisaoMain == 's'){
 		ImprimeCabecalho();
@@ -244,14 +245,14 @@ int main(){
 				break;
 			case 6:
 				int counterK, j;
-				j = 0;
+				j = 1;
 				if(tamanhoDaLista > 0){
 					cout << "De quanto em quantos passos devo seguir?\n";
 					cin >> counterK;
-					node *ptr2;
-					ptr2 = head;
-					ptr = ptr2->next;
 					nail->next = head;
+					node *ptr2;
+					ptr2 = nail;
+					ptr = head;
 					while(tamanhoDaLista > 1){
 						if(j == counterK){
 							ptr2->next = ptr->next;
@@ -259,9 +260,10 @@ int main(){
 							ptr = ptr2->next;
 							tamanhoDaLista--;
 							j = 0;
+						}else{
+							ptr = ptr->next;
+							ptr2 = ptr2->next;
 						}
-						ptr = ptr->next;
-						ptr2 = ptr2->next;
 						j++;
 					}
 					head = ptr2;
