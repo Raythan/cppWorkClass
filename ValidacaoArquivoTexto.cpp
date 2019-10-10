@@ -8,13 +8,13 @@
 using namespace std;
 
 void ImprimeUmArquivo(string paramPathLocation, string paramWrite){
-	ofstream outFile("aprovadas_e_reprovadas.txt");
+	ofstream outFile("aprovadas_e_reprovadas.csv");
 	outFile << paramWrite;
 	outFile.close();
 }
 
 void ImprimeDoisArquivos(string paramPathLocation, string paramWrite1, string paramWrite2){
-	ofstream outFileOk("aprovadas.txt"), outFileNotOk("reprovadas.txt");
+	ofstream outFileOk("aprovadas.csv"), outFileNotOk("reprovadas.csv");
 	outFileOk << paramWrite1;
 	outFileOk.close();
 	outFileNotOk << paramWrite2;
@@ -38,9 +38,21 @@ string FormatStringPath(string paramString){
 	return returnBack;
 }
 
+string FormatStringReprovada(string paramString){
+	string returnBack;
+	for(int i = 0; i < paramString.length(); i++){
+		if(paramString[i] == '-'){
+			break;
+		}
+		returnBack += paramString[i];
+	}
+	
+	return returnBack;
+}
+
 int main(){
 	ifstream inFile;
-	string strParameter, pathLocation, pathDestinationOk, pathDestinationNotOk, strAux, strAux2,
+	string strParameter, pathLocation, pathDestinationOk, pathDestinationNotOk, strAux, strAux2, strAux3,
 		fileContentOk = "Palavras validas\n\n", fileContentNotOk = "\n\nPalavras invalidas\n\n";
 	ifstream inFilePalavrasInvalidas;
 	bool isDivideArquivo, isPalavraValida, isOpcao1Selecionada, isOpcao2Selecionada = false;
@@ -49,7 +61,7 @@ int main(){
 	// Esse laço só vai terminar quando o programa encontrar o arquivo de texto para leitura.
 	while(!isOpcao1Selecionada){
 		cout << "Digite o caminho para o arquivo de leitura incluindo a extensao...\n";
-		cout << "Obs.: Se o arquivo estiver na mesma pasta que o executavel digite apenas o nome do arquivo mais a extensao...\n";
+		cout << "Obs.: Se o arquivo estiver na mesma pasta que o executavel digite apenas o nome do arquivo mais a extensao.\n";
 		gets(auxArray);
 		pathLocation = auxArray;
 		
@@ -75,7 +87,7 @@ int main(){
 	// Obs.: não vai sair do laço até criar o arquivo exatamente como na descrição
 	inFilePalavrasInvalidas.open("Palavras Invalidas.txt");
 	while(!inFilePalavrasInvalidas){
-		cout << "O arquivo [Palavras Invalidas.txt] nao foi localizado junto ao executavel\n";
+		cout << "O arquivo [Palavras Invalidas.txt] nao foi localizado junto ao executavel.\n";
 		cout << "Para o funcionamento do programa eh necessario o arquivo [Palavras Invalidas.txt]\n";
 		cout << "Por favor crie o arquivo com as listas de palavras invalidas junto ao executavel antes de prosseguir.\n";
 		cout << "Pressione Enter apos criar o arquivo para que eu saiba quais sao as palavras invalidas.\n";
@@ -114,6 +126,13 @@ int main(){
     	// Esse laço faz a comparação da palavra que está sendo analisada pelo laço anterior
     	// com cada palavra no arquivo "Palavras invalidas.txt"
 		while(getline(inFilePalavrasInvalidas, strAux2)){
+			
+			// Variável utilizada para manter o valor da string não permitida
+			strAux3 = strAux2;
+			
+			// Essa método auxiliar vai formatar a string não permitida para para validação no condicional seguinte...
+			strAux2 = FormatStringReprovada(strAux2);
+			
 			// Esse condicional é uma flag para a montagem dos arquivos de saída...
 			// se ele achar uma palavra igual, a concatenação de string mais a frente vai colocar a palavra
 			// no arquivo de saída reprovadas.txt, se não vai colocar no aprovadas.txt
@@ -133,7 +152,7 @@ int main(){
 		// Esse condicional vai concatenar a palavra no arquivo reprovado ou aprovado
 		// de acordo com a flag que vier do condicional anterior
 		if(!isPalavraValida){
-			fileContentNotOk += strAux;
+			fileContentNotOk += strAux3;
 			fileContentNotOk.push_back('\n');
 		}else{
 			fileContentOk += strAux;
