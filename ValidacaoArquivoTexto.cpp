@@ -39,10 +39,30 @@ string FormatStringPath(string paramString){
 }
 
 string FormatStringReprovada(string paramString){
+	string returnBack, strAux;
+	for(int i = 0; i < paramString.length(); i++){
+		if(i > 0){
+			if(paramString[i-1] == '*' && paramString[i] == '-' && paramString[i+1] == '*'){
+				for(int j = 0; j < (returnBack.length() - 1); j++)
+					strAux += returnBack[j];
+				break;
+			}
+		}
+		returnBack += paramString[i];
+	}
+	//cout << "Retorno: " << returnBack << " Aux: " << strAux << " :: \n";
+	
+	return strAux;
+}
+
+string AppendStringReprovada(string paramString){
 	string returnBack;
 	for(int i = 0; i < paramString.length(); i++){
-		if(paramString[i] == '-'){
-			break;
+		if(i > 0){
+			if(paramString[i-1] == '*' && paramString[i] == '-' && paramString[i+1] == '*'){
+				returnBack[i-1] = ' ';
+				paramString[i+1] = ' ';
+			}
 		}
 		returnBack += paramString[i];
 	}
@@ -152,6 +172,7 @@ int main(){
 		// Esse condicional vai concatenar a palavra no arquivo reprovado ou aprovado
 		// de acordo com a flag que vier do condicional anterior
 		if(!isPalavraValida){
+			strAux3 = AppendStringReprovada(strAux3);
 			fileContentNotOk += strAux3;
 			fileContentNotOk.push_back('\n');
 		}else{
